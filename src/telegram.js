@@ -614,6 +614,27 @@ class TelegramBot extends EventEmitter {
   }
 
   /**
+   * Use this method to delete a message, including service messages, with the following limitations:
+   * - A message can only be deleted if it was sent less than 48 hours ago.
+   * - Bots can delete outgoing messages in groups and supergroups.
+   * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+   * - If the bot is an administrator of a group, it can delete any message there.
+   * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+   * Returns True on success.
+   *
+   * @param  {Number|String} chatId  Unique identifier for the message recipient
+   * @param  {Number|String} messageId  Unique message identifier
+   * @param  {Object} [options] Additional Telegram query options (provide either one of chat_id, message_id, or inline_message_id here)
+   * @return {Promise}
+   * @see https://core.telegram.org/bots/api#deletemessage
+   */
+  deleteMessage(chatId, messageId, form = {}) {
+    form.chat_id = chatId;
+    form.message_id = messageId;
+    return this._request('deleteMessage', { form });
+  }
+
+  /**
    * Send answers to an inline query.
    * @param  {String} inlineQueryId Unique identifier of the query
    * @param  {InlineQueryResult[]} results An array of results for the inline query
